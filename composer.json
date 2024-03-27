@@ -1,11 +1,11 @@
 {
-    "name": "jonasgn/laravel-brhelpers",
+    "name": "jonasgn/laravel-commons",
     "description": "Possui métodos auxiliares que são comuns em toda aplicação laravel",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jonasgn\\LaravelBrhelpers\\": "src/"
+            "Jonasgn\\LaravelCommons\\": "src/"
         }
     },
     "authors": [
@@ -15,5 +15,10 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0"
+    }
 }
