@@ -1,0 +1,19 @@
+{
+    "name": "jonasgn/laravel-brhelpers",
+    "description": "Possui métodos auxiliares que são comuns em toda aplicação laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jonasgn\\LaravelBrhelpers\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jonas G Neto",
+            "email": "j.goncalvesneto@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
