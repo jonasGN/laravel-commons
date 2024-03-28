@@ -15,7 +15,8 @@ abstract class Formatter
      */
     public static function toOnlyNumbers(?string $value): string
     {
-        if (empty(trim($value)) || $value == null) return '';
+        if ($value === null) return '';
+        if (empty(trim($value))) return '';
 
         $result = preg_replace('/[^0-9]/', '', trim($value));
         return $result;
