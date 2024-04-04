@@ -119,4 +119,13 @@ abstract class Formatter
     {
         return 'R$ ' . number_format($value, 2, ',', '.');
     }
+
+    /**
+     * Retorna a string normalizada com os primeiros caracteres em maísculo e os seguintes 
+     * em mínusculo
+     */
+    public static function capitalizeWords(string $value): string
+    {
+        return ucwords(strtolower($value));
+    }
 }

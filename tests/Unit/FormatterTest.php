@@ -2,7 +2,7 @@
 
 use Jonasgn\LaravelCommons\Formatter;
 
-describe('Method: toOnlyNumbers', function () {
+describe('toOnlyNumbers tests', function () {
     it('should not be empty', function (string $value) {
         expect(Formatter::toOnlyNumbers($value))->not->toBeEmpty();
     })->with(['m9obLJQhezVLS2', 'P^J!3pRs7Kbwuj']);
@@ -22,7 +22,7 @@ describe('Method: toOnlyNumbers', function () {
     });
 });
 
-describe('Method: toPhoneNumber', function () {
+describe('toPhoneNumber tests', function () {
     it('should throw when phone number is invalid', function (string $value) {
         expect(fn () => Formatter::toPhoneNumber($value))->toThrow(
             InvalidArgumentException::class,
@@ -40,7 +40,7 @@ describe('Method: toPhoneNumber', function () {
     ]);
 });
 
-describe('Method: toCep', function () {
+describe('toCep tests', function () {
     it('should throw when cep number is not valid', function (string $value) {
         expect(fn () => Formatter::toCep($value))->toThrow(
             InvalidArgumentException::class,
@@ -48,7 +48,76 @@ describe('Method: toCep', function () {
         );
     })->with(['3200000', '320000000']);
 
-    it('should be a valid formated cep number', function () {
+    it('should be a valid formated CEP number', function () {
         expect(Formatter::toCep('32000000'))->toBe('32000-000');
     });
 });
+
+describe('toCpfCnpj tests', function () {
+    it('should throw when cpf/cnpj is not valid', function (string $value) {
+        expect(fn () => Formatter::toCpfCnpj($value))->toThrow(
+            InvalidArgumentException::class,
+            'Formato do CPF ou CNPJ informado incorreto'
+        );
+    })->with(['839623150801', '257265200001071']);
+
+    it('should be a valid formated CPF/CNPJ number', function (string $value, string $result) {
+        expect(Formatter::toCpfCnpj($value))->toBe($result);
+    })->with([
+        ['89108614000103', '89.108.614/0001-03'],
+        ['43884825011', '438.848.250-11'],
+        ['576.986.060-07', '576.986.060-07'],
+        ['13.269.841/0001-40', '13.269.841/0001-40']
+    ]);
+});
+
+describe('normalizeTextToCompare tests', function () {
+    it('should remove all latin chars from string and upper case it', function (string $value, string $result) {
+        expect(Formatter::normalizeTextToCompare($value))->toBe($result);
+    })->with([
+        ['áéíóúÁÉÍÓÚâêîôÂÊÎÔãõÃÕàÀçÇüÜ', 'AEIOUAEIOUAEIOAEIOAOAOAACCUU'],
+        ['Foó Bâr', 'FOO BAR'],
+        ['~Foó Bâr^`/', 'FOO BAR'],
+    ]);
+});
+
+describe('toDecimalString tests', function () {
+    it('should transform a number into decimal one', function (string $value, string $result) {
+        expect(Formatter::toDecimalString($value))->toBe($result);
+    })->with([
+        ['1', '01'],
+        ['01', '01'],
+        ['10', '10'],
+        ['100', '100'],
+    ]);
+});
+
+describe('hasOnlyNumbers tests', function () {
+    it('should check if a string has only numerical chars', function (string $value, bool $result) {
+        expect(Formatter::hasOnlyNumbers($value))->toBe($result);
+    })->with([
+        ['00foo', false],
+        ['90990909', true],
+        ['999ó', false],
+    ]);
+});
+
+describe('toCurrency tests', function () {
+    it('should format number into currency', function (int|float $value, string $result) {
+        expect(Formatter::toCurrency($value))->toBe($result);
+    })->with([
+        [9, 'R$ 9,00'],
+        [100, 'R$ 100,00'],
+        [199.9, 'R$ 199,90'],
+    ]);
+});
+
+describe('capitalizeWords tests', function () {
+    it('should capitalize only the first letter of each word', function (string $value, string $result) {
+        expect(Formatter::capitalizeWords($value))->toBe($result);
+    });
+})->with([
+    ['Foo bar CAR', 'Foo Bar Car'],
+    ['FOO BAR CAR', 'Foo Bar Car'],
+    ['fOo BaR CAR', 'Foo Bar Car'],
+]);
