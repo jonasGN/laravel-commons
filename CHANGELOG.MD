@@ -1,32 +1,37 @@
 # Changelog
 
-## 1.0.0
+## 0.1.0-alpha
 
--   Publicação inicial
+### Formatadores
 
-### Adicionados
+-   Método para deixar apenas caracteres númericos em uma string (**toOnlyNumbers**)
+-   Método que formata uma string para o formato de telefone (**toPhoneNumber**)
+-   Método que formata uma string para o formato de CEP (**toCep**)
+-   Método que formata uma string para o formato de CPF/CNPJ (**toCpfCnpj**)
+-   Método que limpa todos os caracteres especias para comparação, ideal para busca em banco de dados (**normalizeTextToCompare**)
+-   Método para transformar números para o formato decimal, como "1" para "01" (**toDecimalString**)
+-   Método para comparar se dois textos são o mesmo ignorando maísculas, mínusculas e caracteres especiais (**isSameString**)
+-   Método para verificar se uma string contém apenas caracteres númericos (**hasOnlyNumbers**)
+-   Método para formatar um número em valor monetário (**toCurrency**)
+-   Método para transformar cada primeira letra de uma string em maíscula (**capitalizeWords**)
 
-#### Rules
+### Máscaras
 
--   **Cep**: permite apenas um CEP no formato `00000000` válido
--   **CpfCnpj**: permite apenas CPF e CNPJ válidos nos formatos `00000000000`, `0000000000000`, `000.000.000-00` ou `00.000.000/0000-00`
--   **OnlyNumbers**: permite apenas caracteres númericos
--   **Phone**: permite apenas um telefone válido nos seguintes formatos `(00) 00000-0000`, `(00) 0000-0000`, `000000000` ou `00000000`
--   **Uf**: permite apenas códigos de unidades federativas válidas
+-   Suporte para mascarar CPF/CNPJ, e-mails e telefones
 
-#### DTO
+### Validações
 
--   **ProblemDatails**: DTO no padrão Problem Details, de acordo com a RFC 9457
--   **SuccessResponse**: DTO de resposta padrão com dados adicionais
+-   Suporte para validar CPF e CNPJ
 
-### Atualizações
+### Regras de validação de requisições
 
--
+-   Suporte a validações para campos que contenham: CEP, CPF, CNPJ telefones, códigos das Unidades Federativas (UF) e se o campo é somente númerico
 
-### Correções
+### Objeto de resposta
 
--
+-   Objeto de resposta de erro padronizado conforme o RFC 9457 (Problem Datails)
+-   Objeto de resposta auxiliar para padronizar todas as respostas de sucesso de uma aplicação Laravel
 
-### Removidos
+## 0.2.0-alpha
 
--
+-   Nova regra de validação para cógidos de município do IBGE adicionada
