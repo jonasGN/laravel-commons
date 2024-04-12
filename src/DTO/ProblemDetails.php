@@ -2,6 +2,7 @@
 
 namespace Jonasgn\LaravelCommons\DTO;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use JsonSerializable;
@@ -15,18 +16,21 @@ class ProblemDetails implements JsonSerializable
     private int $statusCode;
     private string $title;
     private string $details;
+    private Exception $error;
     private string $instance;
-    private string $meta;
+    private array $meta;
 
     public function __construct(
         string $title,
         string $details,
+        Exception $error,
         string $instance,
         int $statusCode,
         array $meta = []
     ) {
         $this->title = $title;
         $this->details = $details;
+        $this->error = $error;
         $this->instance = $instance;
         $this->statusCode = $statusCode;
         $this->meta = $meta;
@@ -35,6 +39,7 @@ class ProblemDetails implements JsonSerializable
     public static function new(
         string $title,
         string $details,
+        Exception $exception,
         Request $request,
         int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR,
         array $meta = []
@@ -42,6 +47,7 @@ class ProblemDetails implements JsonSerializable
         return new ProblemDetails(
             title: $title,
             details: $details,
+            error: $exception,
             instance: $request->path(),
             statusCode: $statusCode,
             meta: $meta,
@@ -50,10 +56,9 @@ class ProblemDetails implements JsonSerializable
 
     public function response(): Response
     {
-        return response($this, $this->statusCode, [
-            'Content-Type' => 'application/problem+json',
-            'Content-Language' => 'en',
-        ]);
+        return response($this, $this->statusCode)
+            ->header('Content-Type', 'application/problem+json')
+            ->header('Content-Language', 'pt-BR');
     }
 
     public function jsonSerialize(): mixed
@@ -63,7 +68,11 @@ class ProblemDetails implements JsonSerializable
             "title" => $this->title,
             "detail" => $this->details,
             "instance" => $this->instance,
-        ], $this->meta);
+        ], $this->meta, app()->isLocal() ? [
+            'internal_exception' => $this->error::class,
+            'internal_message' => $this->error->getMessage(),
+            'internal_stack_trace' => $this->error->getTrace(),
+        ] : []);
     }
 
     private function _getTypeRef(): string

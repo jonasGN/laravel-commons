@@ -30,6 +30,19 @@ class SuccessResponse implements JsonSerializable
     }
 
     /**
+     * Retorna um objeto de resposta padronizado
+     */
+    public function response(): Response
+    {
+        return response($this, $this->statusCode);
+    }
+
+    public function created(): Response
+    {
+        return $this->response($this, Response::HTTP_CREATED);
+    }
+
+    /**
      * Adiciona notas para os campos.
      * Ideal para avisos sobre o determinado campo, bem como para sinalizar obsolescência.
      */
@@ -55,7 +68,7 @@ class SuccessResponse implements JsonSerializable
                 'moment' => now(),
                 'data' => $this->data,
             ],
-            isset($this->meta) ? ['meta' => $this->meta] : null
+            isset($this->meta) ? ['meta' => $this->meta] : []
         );
     }
 }
