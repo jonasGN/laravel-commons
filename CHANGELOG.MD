@@ -32,6 +32,14 @@
 -   Objeto de resposta de erro padronizado conforme o RFC 9457 (Problem Datails)
 -   Objeto de resposta auxiliar para padronizar todas as respostas de sucesso de uma aplicação Laravel
 
-## 0.2.0-alpha
+## 0.2.1-alpha
 
--   Nova regra de validação para cógidos de município do IBGE adicionada
+-   Nova regra de validação para códigos de município do IBGE adicionada (CodigoMunicipioIbge )
+-   Objetos de resposta ProblemDetails e SuccessResponse, corrigidos
+
+## 0.3.1-dev
+
+-   Novo método de formatação para PIS/PASEP adicionado (`toPisPasep`)
+-   Nova máscara para PIS/PASEP adicionada (`pispasep`)
+-   Nova regra de validação para PIS/PASEP adicionada (`isValidPisPasep`)
+-   Nova regra de validação para formulários para PIS/PASEP adicionada (`PisPasep`)

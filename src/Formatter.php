@@ -121,11 +121,16 @@ abstract class Formatter
     }
 
     /**
-     * Retorna a string normalizada com os primeiros caracteres em maísculo e os seguintes 
+     * Retorna a string normalizada com os primeiros caracteres em maísculo e os seguintes
      * em mínusculo
      */
     public static function capitalizeWords(string $value): string
     {
         return ucwords(strtolower($value));
+    }
+
+    public static function toPisPasep(string $pispasep): string
+    {
+        return preg_replace('/(\d{3})(\d{5})(\d{2})(\d{1})/', '$1.$2.$3-$4', $pispasep);
     }
 }

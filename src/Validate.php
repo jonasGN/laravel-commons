@@ -19,6 +19,30 @@ abstract class Validate
             : static::_validateCnpj($cpfcnpj);
     }
 
+    public static function isValidPisPasep(string $pispasep): bool
+    {
+        $pispasep = Formatter::toOnlyNumbers($pispasep);
+        if (strlen($pispasep) !== 11) return false;
+
+        // Calcula o dígito verificador
+        $weight = [3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+        $sum = 0;
+
+        for ($i = 0; $i < 10; $i++) {
+            $sum += $pispasep[$i] * $weight[$i];
+        }
+
+        $resto = $sum % 11;
+        $dv = $resto < 2 ? 0 : 11 - $resto;
+
+        // Verifica se o dígito verificador está correto
+        if ($dv == $pispasep[10]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private static function _validateCpf(string $cpf): bool
     {
         // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11

@@ -50,4 +50,9 @@ class Mask
 
         return $result;
     }
+
+    public static function pispasep(string $pispasep): string
+    {
+        return '***.****' . substr($pispasep, 7, 1) . '.' . substr($pispasep, 8, 2) . '-' . substr($pispasep, 10, 1);
+    }
 }
