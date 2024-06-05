@@ -19,6 +19,26 @@ abstract class Validate
             : static::_validateCnpj($cpfcnpj);
     }
 
+    public static function isValidCpf(string $cpf): bool
+    {
+        $cpf = Formatter::toOnlyNumbers($cpf);
+        $lenght = strlen($cpf);
+
+        return $lenght == 11
+            ? static::_validateCpf($cpf)
+            : false;
+    }
+
+    public static function isValidCnpj(string $cnpj): bool
+    {
+        $cnpj = Formatter::toOnlyNumbers($cnpj);
+        $lenght = strlen($cnpj);
+
+        return $lenght == 14
+            ? static::_validateCnpj($cnpj)
+            : false;
+    }
+
     public static function isValidPisPasep(string $pispasep): bool
     {
         $pispasep = Formatter::toOnlyNumbers($pispasep);
