@@ -34,12 +34,12 @@ class SuccessResponse implements JsonSerializable
      */
     public function response(): Response
     {
-        return response($this, $this->statusCode);
+        return new Response($this, $this->statusCode);
     }
 
     public function created(): Response
     {
-        return $this->response($this, Response::HTTP_CREATED);
+        return new Response($this, Response::HTTP_CREATED);
     }
 
     /**
@@ -53,7 +53,7 @@ class SuccessResponse implements JsonSerializable
 
     public static function noContent(): Response
     {
-        return response(null, Response::HTTP_NO_CONTENT);
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
