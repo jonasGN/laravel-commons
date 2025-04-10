@@ -3,6 +3,7 @@
 namespace Jonasgn\LaravelCommons\DTO;
 
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use JsonSerializable;
 
 /**
@@ -27,6 +28,12 @@ class SuccessResponse implements JsonSerializable
     public static function new(mixed $data, int $statusCode = Response::HTTP_OK): SuccessResponse
     {
         return new SuccessResponse($data, $statusCode);
+    }
+
+    public static function resourceCollection(LengthAwarePaginator $page, string $resourceClass, int $statusCode = Response::HTTP_OK): SuccessResponse
+    {
+        $page->getCollection()->transform(fn($item) => new $resourceClass($item));
+        return new SuccessResponse($page, $statusCode);
     }
 
     /**
