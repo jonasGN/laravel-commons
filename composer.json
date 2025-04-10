@@ -19,13 +19,13 @@
     "require": {
         "php": "^8.2"
     },
-    "require-dev": {
-        "orchestra/testbench": "^8.0",
-        "pestphp/pest": "2.x-dev"
-    },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.2",
+        "pestphp/pest": "^3.8"
     }
 }
